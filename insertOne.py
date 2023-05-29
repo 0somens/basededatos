@@ -1,5 +1,5 @@
 from coneccion import *
-
+db = db.Supermercado
 db.cliente.Supermercado
 coleccion = db.productos
 
