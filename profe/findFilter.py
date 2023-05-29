@@ -1,4 +1,5 @@
-from profe.conectar import *
+from conectar import *
+
 db = cliente.profesorDataBase
 coleccion = db.Productos
 

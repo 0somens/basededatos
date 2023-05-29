@@ -1,8 +1,8 @@
+
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-from bson.objectid import ObjectId
 
-uri = "mongodb+srv://ptaipe:plto4956@inacap2023.guvc7ax.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://matiasosores:XJLMzLTVcFYc7iCt@tienda.ietwuqs.mongodb.net/?retryWrites=true&w=majority"
 
 #Crear un nuevo cliente de conexion remota
 cliente = MongoClient(uri, server_api=ServerApi('1'))
