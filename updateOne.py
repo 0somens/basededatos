@@ -4,8 +4,8 @@ db = client.Supermercado
 
 coleccion = db.productos
 # documentos = coleccion.find({"nombre":"Cereal"})
-filtro = {'nombre':'Cereal'}
-update = {"$set":{'precio':'6.99'}}
+filtro = {'ODOO UNI':'708000000'}
+update = {"$set":{'CATEG NESTLÉ':'Cookies'}}
 
 # updateDocumento = coleccion.update_one()
 
