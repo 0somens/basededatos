@@ -1,9 +1,13 @@
 from coneccion import *
 
-codigo = input("ingrese el codigo del producto")
-db.cliente.Supermercado
+db = client.Supermercado
+
+# codigo = input("ingrese el codigo del producto")
+
 coleccion = db.productos
-documentos = coleccion.find({"nombre":"Cereal"})
+documentos = coleccion.find({"ODOO UNI":"708000000"})
 
 for documentos in documentos:
     print(documentos)
+
+# funciona!!!

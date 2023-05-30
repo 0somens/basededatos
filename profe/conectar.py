@@ -1,14 +1,14 @@
+
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 uri = "mongodb+srv://matiasosores:XJLMzLTVcFYc7iCt@tienda.ietwuqs.mongodb.net/?retryWrites=true&w=majority"
 
-# Create a new client and connect to the server
-client = MongoClient(uri, server_api=ServerApi('1'))
-
-# Send a ping to confirm a successful connection
+#Crear un nuevo cliente de conexion remota
+cliente = MongoClient(uri, server_api=ServerApi('1'))
 try:
-    client.admin.command('ping')
-    print("Coneccion exitosa")
+    cliente.admin.command('ping')
+    print("Conexion Exitosa con Atlas. (Y)")
+    
 except Exception as e:
     print(e)
