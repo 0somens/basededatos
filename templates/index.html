@@ -12,11 +12,12 @@
         <div class="card">
             <h1>Atlas - Python - Flask Framework - HMTL</h1>
         </div>
+        <!-- PROVEEDORES -->
         <div class="row">
             <div class="col-md-4">
                     {% for proveedores in proveedores  %}
                         <div>
-                            <h5>Productos {{proveedores._id}}</h5>
+                            <h5>Proveedores {{proveedores._id}}</h5>
                             <small>ID</small>
                             <input type="text"  id="" value="{{proveedores._id}}" class="form-control">
                             <small>Nombre</small>
@@ -27,6 +28,64 @@
                             <input type="text"  id="" value="{{proveedores.telefono}}" class="form-control">
                             <small>Correo electronico</small>
                             <input type="text"  id="" value="{{proveedores.correo_electronico}}" class="form-control">
+                        </div>
+                    {% endfor  %}
+            </div>  
+        </div>
+        <!-- CLIENTES -->
+        <div class="row">
+            <div class="col-md-4">
+                    {% for clientes in clientes  %}
+                        <div>
+                            <h5>Cliente {{clientes._id}}</h5>
+                            <small>ID</small>
+                            <input type="text"  id="" value="{{clientes._id}}" class="form-control">
+                            <small>Nombre</small>
+                            <input type="text"  id="" value="{{clientes.nombre}}" class="form-control">
+                            <small>Direccion</small>
+                            <input type="text"  id="" value="{{clientes.direccion}}" class="form-control">
+                            <small>Telefono</small>
+                            <input type="text"  id="" value="{{clientes.telefono}}" class="form-control">
+                            <small>Correo electronico</small>
+                            <input type="text"  id="" value="{{clientes.correo_electronico}}" class="form-control">
+                            <small>Historial de compras</small>
+                            <input type="text"  id="" value="{{clientes.historial_de_compras}}" class="form-control">
+                        </div>
+                    {% endfor  %}
+            </div>  
+        </div>
+        <!-- PRODUCTOS -->
+        <div class="row">
+            <div class="col-md-4">
+                    {% for productos in productos  %}
+                        <div>
+                            <h5>Productos {{productos._id}}</h5>
+                            <small>ID</small>
+                            <input type="text"  id="" value="{{productos._id}}" class="form-control">
+                            <small>CATEG NESTLÈ</small>
+                            <input type="text"  id="" value="{{productos.CATEG_NESTLÉ}}" class="form-control">
+                            <small>ODOO UNI</small>
+                            <input type="text"  id="" value="{{productos.ODOO_UNI}}" class="form-control">
+                            <small>Unidad de venta</small>
+                            <input type="text"  id="" value="{{productos.Unidad_de_venta}}" class="form-control">
+                            <small>Unidad de medida</small>
+                            <input type="text"  id="" value="{{productos.Unidad_de_medida}}" class="form-control">
+                            <small>EAN UNI VTA</small>
+                            <input type="text"  id="" value="{{productos.EAN_UNI_VTA}}" class="form-control">
+                            <small>SAP</small>
+                            <input type="text"  id="" value="{{productos.SAP}}" class="form-control">
+                            <small>DESCRIPCION SKU</small>
+                            <input type="text"  id="" value="{{productos.DESCRIPCION_SKU}}" class="form-control">
+                            <small>Costo</small>
+                            <input type="text"  id="" value="{{productos.Costo}}" class="form-control">
+                            <small>Costo 2</small>
+                            <input type="text"  id="" value="{{productos.Costo_2}}" class="form-control">
+                            <small>Descuento</small>
+                            <input type="text"  id="" value="{{productos.Descuento}}" class="form-control">
+                            <small>Precio neto</small>
+                            <input type="text"  id="" value="{{productos.Precio_neto}}" class="form-control">
+                            <small>Precio bruto</small>
+                            <input type="text"  id="" value="{{productos.Precio_bruto}}" class="form-control">
                         </div>
                     {% endfor  %}
             </div>  
