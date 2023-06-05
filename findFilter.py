@@ -1,5 +1,6 @@
 from coneccion import *
 
+
 db = client.Supermercado
 
 # codigo = input("ingrese el codigo del producto")
@@ -10,4 +11,4 @@ documentos = coleccion.find({"ODOO UNI":"708000000"})
 for documentos in documentos:
     print(documentos)
 
-# funciona!!!
+# ya no funciona!!!
