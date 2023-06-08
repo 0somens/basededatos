@@ -9,7 +9,7 @@ def conexion():
     try:
         client.admin.command('ping')
         print("Coneccion exitosa")
-        db = client.Supermercado
+        db = client.RestauranteDB
         return db
     except Exception as e:
         print(e)
