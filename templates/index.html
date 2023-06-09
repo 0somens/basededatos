@@ -33,49 +33,65 @@
                         </div>
                     {% endfor  %}
             </div>
+            
             <div class="col-md-4">
-                {% for Menús in Menús  %}
-                    <div>
-                        <h5>Menú {{Menú._id}}</h5>
-                        <small>ID</small>
-                        <input type="text"  id="" value="{{Menús._id}}" class="form-control">
-                        <small>Nombre</small>
-                        <input type="text"  id="" value="{{Menús.Nombre}}" class="form-control">
-                        <small>Apellido</small>
-                        <input type="text"  id="" value="{{Menús.descripcion}}" class="form-control">
-                        <small>Telefono</small>
-                        <input type="text"  id="" value="{{Clientes.phone}}" class="form-control">
-                        <small>Dirección</small>
-                        <input type="text"  id="" value="{{Clientes.address}}" class="form-control">
-                        <small>Correo electronico</small>
-                        <input type="text"  id="" value="{{Clientes.mail}}" class="form-control">
-                    </div>
-                {% endfor  %}
-        </div>  
-        <div class="col-md-4">
-            {% for Clientes in Clientes  %}
-                <div>
-                    <h5>Clientes {{Clientes._id}}</h5>
+                {% for Pedido in Pedidos %}
+                  <div>
+                    <h5>Pedido {{ Pedido._id }}</h5>
                     <small>ID</small>
-                    <input type="text"  id="" value="{{Clientes._id}}" class="form-control">
+                    <input type="text" id="" value="{{ Pedido._id }}" class="form-control">
+                    <small>ID Cliente</small>
+                    <input type="text" id="" value="{{ Pedido.Cliente }}" class="form-control">
+                    <small>Fecha</small>
+                    <input type="text" id="" value="{{ Pedido.Fecha }}" class="form-control">
+              
+                    <!-- Iterar sobre los artículos dentro del pedido -->
+                    {% for Articulo in Pedido.Artículos %}
+                    <div>
+                      <h6>Artículo {{ loop.index }}</h6>
+                      <small>Nombre</small>
+                      <input type="text" id="" value="{{ Articulo.Nombre }}" class="form-control">
+                      <small>Cantidad</small>
+                      <input type="text" id="" value="{{ Articulo.Cantidad }}" class="form-control">
+                      <small>Precio Unitario</small>
+                      <input type="text" id="" value="{{ Articulo.PrecioUnitario }}" class="form-control">
+                    </div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
+            <!-- Hasta aqui arriba todo bien (Y) -->
+            <!-- MENÚS -->
+            <div class="col-md-4">
+                {% for menú in Menús %}
+                <div>
+                  <h5>Menú {{ menú._id }}</h5>
+                  <small>ID</small>
+                  <input type="text" id="" value="{{ menú._id }}" class="form-control">
+                  <small>Nombre</small>
+                  <input type="text" id="" value="{{ menú.Nombre }}" class="form-control">
+                  <small>Descripción</small>
+                  <input type="text" id="" value="{{ menú.Descripción }}" class="form-control">
+                  
+                  <!-- Iterar sobre los platos dentro del menú -->
+                  {% for plato in menú.Platos %}
+                  <div>
+                    <h6>Plato {{ loop.index }}</h6>
                     <small>Nombre</small>
-                    <input type="text"  id="" value="{{Clientes.name}}" class="form-control">
-                    <small>Apellido</small>
-                    <input type="text"  id="" value="{{Clientes.apellido}}" class="form-control">
-                    <small>Telefono</small>
-                    <input type="text"  id="" value="{{Clientes.phone}}" class="form-control">
-                    <small>Dirección</small>
-                    <input type="text"  id="" value="{{Clientes.address}}" class="form-control">
-                    <small>Correo electronico</small>
-                    <input type="text"  id="" value="{{Clientes.mail}}" class="form-control">
+                    <input type="text" id="" value="{{ plato.Nombre }}" class="form-control">
+                    <small>Descripción</small>
+                    <input type="text" id="" value="{{ plato.Descripción }}" class="form-control">
+                    <small>Precio</small>
+                    <input type="text" id="" value="{{ plato.Precio }}" class="form-control">
+                  </div>
+                  {% endfor %}
                 </div>
-            {% endfor  %}
-        </div>    
-        </div>
-        <!-- MENÚS -->
+                {% endfor %}
+              </div>
+              
 
-        <!-- PEDIDOS -->
-       
+              
+        </div>    
     </div>
 
 </body>
