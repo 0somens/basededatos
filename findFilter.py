@@ -1,6 +1,6 @@
 from coneccion import *
 
-
+client = MongoClient(uri, server_api=ServerApi('1'))
 db = client.Supermercado
 
 # codigo = input("ingrese el codigo del producto")

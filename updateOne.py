@@ -1,5 +1,5 @@
 from coneccion import *
-
+client = MongoClient(uri, server_api=ServerApi('1'))
 db = client.Supermercado
 
 coleccion = db.productos
