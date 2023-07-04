@@ -1,12 +1,9 @@
-from flask import *
-
-from coneccion import *
+from flask import Flask, render_template, request, redirect
+from coneccion import conexion
 
 app = Flask(__name__)
 
 @app.route('/')
-
-
 def home():
     db = conexion()
     Clientes = db.Clientes
@@ -18,8 +15,121 @@ def home():
     Menús = db.Menús
     datosmenus = Menús.find()
 
+    return render_template('index.html', Clientes=datos, Pedidos=datospedidos, Menús=datosmenus)
+
+@app.route('/insertar_cliente', methods=['POST'])
+def insertar_cliente():
+    db = conexion()
+    Clientes = db.Clientes
+
+    name = request.form['name']
+    apellido = request.form['apellido']
+    phone = request.form['phone']
+    address = request.form['address']
+    mail = request.form['mail']
+
+    cliente = {
+        'name': name,
+        'apellido': apellido,
+        'phone': phone,
+        'address': address,
+        'mail': mail
+    }
+    
+    Clientes.insert_one(cliente)
+
+    return redirect('/')        
+@app.route('/actualizar-cliente', methods=['POST'])
+def actualizar_cliente():
+    # Obtén los datos enviados desde el formulario
+    name = request.form.get('name')
+    apellido = request.form.get('apellido')
+    phone = request.form.get('phone')
+    address = request.form.get('address')
+    mail = request.form.get('mail')
 
 
-    return render_template('index.html', Clientes = datos, Pedidos=datospedidos, Menús = datosmenus ) #Esto manda a llamar a la /templates/index.html para que una vez cargado aparezca en pantalla #, menu = datosmenus, pedidos = datospedidos
+    # Redirecciona a la página principal u otra página de éxito
+    return redirect('/')
+
+@app.route('/insertar_pedido', methods=['POST'])
+def insertar_pedido():
+    db = conexion()
+    Pedidos = db.Pedidos
+
+    cliente = request.form['Cliente']
+    fecha = request.form['Fecha']
+    nombre_plato = request.form['Plato1']
+    cantidad = request.form['Cantidad']
+    precio_unitario = request.form['PrecioUnitario']
+
+    pedido = {
+        "Cliente": cliente,
+        "Fecha": fecha,
+        "Artículos": [
+            {
+                "Nombre": nombre_plato,
+                "Cantidad": cantidad,
+                "PrecioUnitario": precio_unitario
+            }
+        ]
+    }
+    Pedidos.insert_one(pedido)
+    # Aquí puedes insertar el pedido en la base de datos MongoDB
+
+    return redirect('/') 
+
+
+@app.route('/insertar_menu', methods=['POST'])
+def insertar_menu():
+    db = conexion()
+    Menús = db.Menús
+
+    nombre = request.form['NameMenu']
+    descripcion = request.form['DescripcionMenu']
+
+    plato1 = request.form['NombrePlato1']
+    desc1 = request.form['DescripcionPlato1']
+    price1 = request.form['PrecioPlato1']
+
+    plato2 = request.form['NombrePlato2']
+    desc2 = request.form['DescripcionPlato2']
+    price2 = request.form['PrecioPlato2']
+
+    platopos = request.form['NombrePostre']
+    descpos = request.form['DescripcionPostre']
+    pricepos = request.form['PrecioPostre']
+
+    menu = {
+        "Nombre": nombre,
+        "Descripción": descripcion,
+        "Platos": [
+            {
+                "Nombre": plato1,
+                "Descripción": desc1,
+                "Precio": price1
+            },
+            {
+                "Nombre": plato2,
+                "Descripción": desc2,
+                "Precio": price2
+            },
+            {
+                "Nombre": platopos,
+                "Descripción": descpos,
+                "Precio": pricepos
+            }
+        ]
+    }
+
+    Menús.insert_one(menu)
+    # Aquí puedes insertar el menú en la base de datos MongoDB
+
+    return redirect('/')
+
+
+
+
+
 if __name__ == '__main__':
-    app.run(debug=True) #Ejecuta la aplicacion del Main en modo de prueba (mientras el servidor este activo puedo modificar y puedo ver lo cambios de manera sincronica )
+    app.run(debug=True)

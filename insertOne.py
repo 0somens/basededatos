@@ -1,22 +1,30 @@
 from coneccion import *
+from index import *
+
+
 client = MongoClient(uri, server_api=ServerApi('1'))
-db = client.Supermercado
 
-coleccion = db.proveedores
+db = client.get_database('restauranteDB')
 
-nombre = "Matias Osores"
-direccion = "psj x 321"
-telefono = "+569 3456 4321"
-correo_electronico = "matias.osores@inacapmail.cl"
+coleccion = db.get_collection('Clientes')
+# Get data from HTML form
+nombre = request.form.get('name')
+apellido = request.form.get('apellido')
+telefono = request.form.get('telefono')
+direccion = request.form.get('direccion')
+mail = request.form.get('email')
+
 
 documentos = {
-	"nombre": "qwerrt",
-	"direccion":"psj imaginario 123",
-	"telefono": "+569 1234 4321",
-	"correo_electronico":"mati.osores@gmail.com"
+	"name": nombre,
+	"apellido": apellido,
+	"phone": telefono,
+	"address": direccion,
+	"email": mail
       } 
 try:
 	modificacion = coleccion.insert_one(documentos)
 	print('accion realizada')
 except Exception as e:
 	print(e)
+ 

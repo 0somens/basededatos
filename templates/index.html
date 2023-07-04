@@ -19,11 +19,17 @@
             <h1>Atlas - Python - Flask Framework - HMTL</h1>
         </div>
 
+        <!--Searcher-->
+
+        <input type="search" class="form-control form-control-dark text-bg-light mt-4" placeholder="Search..." aria-label="Search">
+
+
+        <!--Searcher-->
+
         <!-- CLIENTES -->
         
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-md-4">
-                
                 <div class="card card-container">  
                     {% for Clientes in Clientes  %}
                         <div>
@@ -50,27 +56,26 @@
                 <div class="card mt-3" style="width: 18rem;">
                     <div class="card-body">
                         <h1><strong>Insertar Cliente</strong></h1>
-                        <form id="product-form" class="card-body">
+                        <form id="product-form" action="/insertar_cliente" method="POST" class="card-body">
                             <div class="form-group mt-2">
-                                <input type="text" id="Name" placeholder="Nombre " class="form-control" required>
+                                <input type="text" name="name" placeholder="Nombre" class="form-control" required>
                             </div>
                             <div class="form-group mt-2">
-                                <input type="text" id="apellido" placeholder="Apellido" class="form-control" required>
+                                <input type="text" name="apellido" placeholder="Apellido" class="form-control" required>
                             </div>
                             <div class="form-group mt-2">
-                                <input type="text" id="phone" placeholder="Telefono" class="form-control" required>
+                                <input type="text" name="phone" placeholder="Teléfono" class="form-control" required>
                             </div>
                             <div class="form-group mt-2">
-                                <input type="text" id="address" placeholder="Direccion" class="form-control" required>
+                                <input type="text" name="address" placeholder="Dirección" class="form-control" required>
                             </div>
                             <div class="form-group mt-2">
-                                <input type="text" id="mail" placeholder="Email" class="form-control" required>
+                                <input type="email" name="mail" placeholder="Email" class="form-control" required>
                             </div>
-                            <button id="insertcli" type="button" class="btn btn-success mt-2">Insertar</button>
+                            <button type="submit" class="btn btn-success mt-2">Insertar</button>
                         </form>
-
                     </div>
-                </div>
+                </div>                
             </div>
 
             <div class="col-md-4">
@@ -107,30 +112,30 @@
                 </div>
 
                 <div class="card mt-3" style="width: 18rem;">
-                    <h1><strong>Insertar Pedido</strong></h1>    
+                    <h1><strong>Insertar Pedido</strong></h1>
                     <div class="card-body card-container">
-                        <form id="product-form" class="card-body">
+                        <form id="product-form" action="/insertar_pedido" method="POST" class="card-body">
                             <div class="form-group mt-2">
-                                <input type="text" id="id" placeholder="ClienteID" class="form-control" required>
+                                <input type="text" name="Cliente" placeholder="ClienteID" class="form-control" required>
                             </div>
                             <h6>Fecha del pedido</h6>
                             <div class="form-group mt-2">
-                                <input type="date" id="name" placeholder="Fecha" class="form-control" required>
+                                <input type="date" name="Fecha" class="form-control" required>
                             </div>
-                            <h6>Articulos</h6>
+                            <h6>Artículos</h6>
                             <div class="form-group mt-2">
-                                <input type="text" id="autor" placeholder="Nombre plato" class="form-control" required>
-                            </div>
-                            <div class="form-group mt-2">
-                                <input type="text" id="autor" placeholder="Cantidad" class="form-control" required>
+                                <input type="text" name="Plato1" placeholder="Nombre plato" class="form-control" required>
                             </div>
                             <div class="form-group mt-2">
-                                <input type="text" id="autor" placeholder="Precio Unitario" class="form-control" required>
+                                <input type="text" name="Cantidad" placeholder="Cantidad" class="form-control" required>
                             </div>
-                            <button id="insertpedido"type="button" class="btn btn-success mt-2">Insertar</button>
+                            <div class="form-group mt-2">
+                                <input type="text" name="PrecioUnitario" placeholder="Precio Unitario" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-success mt-2">Insertar</button>
                         </form>
                     </div>
-                </div>
+                </div>                
             </div>
 
             <!-- MENÚS -->
@@ -166,55 +171,56 @@
                     {% endfor %}
                 </div>
                 <div class="card mt-3" style="width: 18rem;">
-                    <h1><strong>Insertar Menu</strong></h1>    
+                    <h1><strong>Insertar Menú</strong></h1>
                     <div class="card-body card-container">
-                      <form id="product-form" class="card-body">
-                        <div class="form-group mt-2">
-                            <input type="text" id="id" placeholder="Nombre del Menú" class="form-control" required>
-                        </div>
-                        <div class="form-group mt-2">
-                            <input type="text" id="name" placeholder="Descripcion" class="form-control" required>
-                        </div>
-                        <h6>Plato 1</h6>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Nombre" class="form-control" required>
-                        </div>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Descripcion" class="form-control" required>
-                        </div>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Precio" class="form-control" required>
-                        </div>
-                        <h6>Plato 2</h6>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Nombre" class="form-control" required>
-                        </div>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Descripcion" class="form-control" required>
-                        </div>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Precio" class="form-control" required>
-                        </div>
-                        <h6>Plato Postre</h6>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Nombre" class="form-control" required>
-                        </div>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Descripcion" class="form-control" required>
-                        </div>
-                        <div class="form-group mt-2">
-                            <input type="text" id="autor" placeholder="Precio" class="form-control" required>
-                        </div>
-                        <button id="insertmenu"type="button" class="btn btn-success mt-2">Insertar</button>
-                    </form>
-                      
+                        <form id="product-form" action="/insertar_menu" method="POST" class="card-body">
+                            <div class="form-group mt-2">
+                                <input type="text" name="NameMenu" placeholder="Nombre del Menú" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="text" name="DescripcionMenu" placeholder="Descripción" class="form-control" required>
+                            </div>
+                            <h6>Plato 1</h6>
+                            <div class="form-group mt-2">
+                                <input type="text" name="NombrePlato1" placeholder="Nombre" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="text" name="DescripcionPlato1" placeholder="Descripción" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="text" name="PrecioPlato1" placeholder="Precio" class="form-control" required>
+                            </div>
+                            <h6>Plato 2</h6>
+                            <div class="form-group mt-2">
+                                <input type="text" name="NombrePlato2" placeholder="Nombre" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="text" name="DescripcionPlato2" placeholder="Descripción" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="text" name="PrecioPlato2" placeholder="Precio" class="form-control" required>
+                            </div>
+                            <h6>Plato Postre</h6>
+                            <div class="form-group mt-2">
+                                <input type="text" name="NombrePostre" placeholder="Nombre" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="text" name="DescripcionPostre" placeholder="Descripción" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="text" name="PrecioPostre" placeholder="Precio" class="form-control" required>
+                            </div>
+                            <button id="insertmenu" type="submit" class="btn btn-success mt-2">Insertar</button>
+                        </form>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
 </body>
-<!-- AGREGAR A CADA DOCUMENTO DENTRO DE LA BASE DE DATOS ESTADO:1 POR DEFECTO PARA QUE ESTE ACTIVADO AL MOMENTO DE "ELIMINAR" UN DOCUMENTO EL ESTADO ESTARA EN 0 POR LO QUE NO
+<!-- AGREGAR A CADA DOCUMENTO DENTRO DE LA BASE DE DATOS ESTADO:1 POR DEFECTO PARA QUE ESTE ACTIVADO AL MOMENTO DE "ELIMINAR" 
+UN DOCUMENTO EL ESTADO ESTARA EN 0 POR LO QUE NO
 DEBERIA APARECER EN PANTALLA -->
 
 <!--Crear un Searcher (DESAFIO)-->
