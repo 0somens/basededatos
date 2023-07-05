@@ -20,8 +20,10 @@ def home():
     return render_template('index.html', Clientes=datos, Pedidos=datospedidos, Menús=datosmenus)
 
 
-
-# CLIENTES ADMINISTRACION
+# -------------------- CLIENTES ADMINISTRACION -------------------- #
+# -------------------- CLIENTES ADMINISTRACION -------------------- #
+# -------------------- CLIENTES ADMINISTRACION -------------------- #
+# -------------------- CLIENTES ADMINISTRACION -------------------- #
 @app.route('/insertar_cliente', methods=['POST'])
 def insertar_cliente():
     db = conexion()
@@ -43,7 +45,9 @@ def insertar_cliente():
     
     Clientes.insert_one(cliente)
 
-    return redirect('/')        
+    return redirect('/')       
+
+ 
 @app.route('/actualizar-cliente', methods=['POST'])
 def actualizar_cliente():
     # Obtén los datos enviados desde el formulario
@@ -73,11 +77,11 @@ def actualizar_cliente():
     return redirect('/')
 
 
-
-
-
-
-# PEDIDO ADMINISTRACION
+# -------------------- PEDIDO ADMINISTRACION -------------------- #
+# -------------------- PEDIDO ADMINISTRACION -------------------- #
+# -------------------- PEDIDO ADMINISTRACION -------------------- #
+# -------------------- PEDIDO ADMINISTRACION -------------------- #
+# -------------------- PEDIDO ADMINISTRACION -------------------- #
 @app.route('/insertar_pedido', methods=['POST'])
 def insertar_pedido():
     db = conexion()
@@ -103,13 +107,45 @@ def insertar_pedido():
     Pedidos.insert_one(pedido)
     # Aquí puedes insertar el pedido en la base de datos MongoDB
 
-    return redirect('/') 
+    return redirect('/')
+
+@app.route('/actualizar-pedido', methods=['POST'])
+def actualizar_pedido():
+    # Obtén los datos enviados desde el formulario
+    pedido_id = request.form['id_pedido']
+    cliente = request.form['Cliente']
+    fecha = request.form['Fecha']
+    nombre_plato = request.form['Plato1']
+    cantidad = request.form['Cantidad']
+    precio_unitario = request.form['PrecioUnitario']
+    # Realiza la actualización en la base de datos
+    db = conexion()
+    Pedidos = db.Pedidos
+
+    Pedidos.update_one(
+        {'_id': ObjectId(pedido_id)},
+        {"$set": {
+            "Cliente": cliente,
+            "Fecha": fecha,
+            "Artículos": [
+                {
+                    "Nombre": nombre_plato,
+                    "Cantidad": cantidad,
+                    "PrecioUnitario": precio_unitario
+                }
+            ]
+        }}
+    )
+
+    # Redirecciona a la página principal u otra página de éxito
+    return redirect('/')
 
 
-
-
-
-# MENU ADMINISTRACION
+#-------------------- MENU ADMINISTRACION --------------------#
+#-------------------- MENU ADMINISTRACION --------------------#
+#-------------------- MENU ADMINISTRACION --------------------#
+#-------------------- MENU ADMINISTRACION --------------------#
+#-------------------- MENU ADMINISTRACION --------------------#
 @app.route('/insertar_menu', methods=['POST'])
 def insertar_menu():
     db = conexion()
@@ -156,6 +192,60 @@ def insertar_menu():
     # Aquí puedes insertar el menú en la base de datos MongoDB
 
     return redirect('/')
+
+app.route('/actualizar-menu', methods=['POST'])
+def actualizar_menu():
+    # Obtén los datos enviados desde el formulario
+    menu_id = request.form['id_menu']
+    nombre = request.form['NameMenu']
+    descripcion = request.form['DescripcionMenu']
+
+    plato1 = request.form['NombrePlato1']
+    desc1 = request.form['DescripcionPlato1']
+    price1 = request.form['PrecioPlato1']
+
+    plato2 = request.form['NombrePlato2']
+    desc2 = request.form['DescripcionPlato2']
+    price2 = request.form['PrecioPlato2']
+
+    platopos = request.form['NombrePostre']
+    descpos = request.form['DescripcionPostre']
+    pricepos = request.form['PrecioPostre']
+    # Realiza la actualización en la base de datos
+    db = conexion()
+    Menús = db.Menús
+
+    Menús.update_one(
+        {'_id': ObjectId(menu_id)},
+        {"$set": {
+            "Nombre": nombre,
+            "Descripción": descripcion,
+            "Platos": [
+                {
+                    "Nombre": plato1,
+                    "Descripción": desc1,
+                    "Precio": price1
+                },
+                {
+                    "Nombre": plato2,
+                    "Descripción": desc2,
+                    "Precio": price2
+                },
+                {
+                    "Nombre": platopos,
+                    "Descripción": descpos,
+                    "Precio": pricepos
+                }
+            ]
+        }}
+    )
+
+    # Redirecciona a la página principal u otra página de éxito
+    return redirect('/')
+
+
+
+
 
 
 

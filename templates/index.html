@@ -81,35 +81,36 @@
             <div class="col-md-4">
                 <div class="card card-container">
                     {% for Pedido in Pedidos %}
+                    <form action="/actualizar-pedido" method="POST">
                         <div>
                             <h5>Pedido {{ Pedido._id }}</h5>
                             <small>ID</small>
-                            <input type="text" id="" value="{{ Pedido._id }}" class="form-control" readonly>
+                            <input type="text" name="id_pedido" value="{{ Pedido._id }}" class="form-control" readonly>
                             <small>ID Cliente</small>
-                            <input type="text" id="" value="{{ Pedido.Cliente }}" class="form-control">
+                            <input type="text" name="Cliente" value="{{ Pedido.Cliente }}" class="form-control">
                             <small>Fecha</small>
-                            <input type="text" id="" value="{{ Pedido.Fecha }}" class="form-control">
-
+                            <input type="text" name="Fecha" value="{{ Pedido.Fecha }}" class="form-control">
+                
                             <!-- Iterar sobre los artículos dentro del pedido -->
                             {% for Articulo in Pedido.Artículos %}
-                                <div>
-                                    <h6>Artículo {{ loop.index }}</h6>
-                                    <small>Nombre</small>
-                                    <input type="text" id="" value="{{ Articulo.Nombre }}" class="form-control">
-                                    <small>Cantidad</small>
-                                    <input type="text" id="" value="{{ Articulo.Cantidad }}" class="form-control">
-                                    <small>Precio Unitario</small>
-                                    <input type="text" id="" value="{{ Articulo.PrecioUnitario }}" class="form-control">
-                                </div>
-                                
+                            <div>
+                                <h6>Artículo {{ loop.index }}</h6>
+                                <small>Nombre</small>
+                                <input type="text" name="Plato1" value="{{ Articulo.Nombre }}" class="form-control">
+                                <small>Cantidad</small>
+                                <input type="text" name="Cantidad" value="{{ Articulo.Cantidad }}" class="form-control">
+                                <small>Precio Unitario</small>
+                                <input type="text" name="PrecioUnitario" value="{{ Articulo.PrecioUnitario }}" class="form-control">
+                            </div>
                             {% endfor %}
                         </div>
                         <div class="mt-2">
-                            <button id="editpedido"type="button" class="btn btn-primary">Editar</button>
-                            <button id="droppedido"type="button" class="btn btn-danger">Eliminar</button>
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                            <button type="button" class="btn btn-danger">Eliminar</button>
                         </div>
+                    </form>
                     {% endfor %}
-                </div>
+                </div>                
 
                 <div class="card mt-3" style="width: 18rem;">
                     <h1><strong>Insertar Pedido</strong></h1>
@@ -140,35 +141,39 @@
 
             <!-- MENÚS -->
             <div class="col-md-4">
-                <div class="card card-container">
-                    {% for menú in Menús %}
-                        <div>
-                            <h5>Menú {{ menú._id }}</h5>
-                            <small>ID</small>
-                            <input type="text" id="" value="{{ menú._id }}" class="form-control" readonly>
-                            <small>Nombre</small>
-                            <input type="text" id="" value="{{ menú.Nombre }}" class="form-control">
-                            <small>Descripción</small>
-                            <input type="text" id="" value="{{ menú.Descripción }}" class="form-control">
+<div class="card card-container">
+    <form action="/actualizar-menu" method="POST">
+    {% for menú in Menús %}
+        <div>
+            <h5>Menú {{ menú._id }}</h5>
+            <small>ID</small>
+            <input type="text" name="id_menu" value="{{ menú._id }}" class="form-control" readonly>
+            <small>Nombre</small>
+            <input type="text" name="NameMenu" value="{{ menú.Nombre }}" class="form-control">
+            <small>Descripción</small>
+            <input type="text" name="DescripcionMenu" value="{{ menú.Descripción }}" class="form-control">
 
-                            <!-- AQUI PLATOS/MENU -->
-                            {% for plato in menú.Platos %}
-                                <div>
-                                    <h6>Plato {{ loop.index }}</h6>
-                                    <small>Nombre</small>
-                                    <input type="text" id="" value="{{ plato.Nombre }}" class="form-control">
-                                    <small>Descripción</small>
-                                    <input type="text" id="" value="{{ plato.Descripción }}" class="form-control">
-                                    <small>Precio</small>
-                                    <input type="text" id="" value="{{ plato.Precio }}" class="form-control">
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="mt-2">
-                            <button id="editmenu"type="button" class="btn btn-primary">Editar</button>
-                            <button id="dropmenu" type="button" class="btn btn-danger">Eliminar</button>
-                        </div>
-                    {% endfor %}
+            <!-- AQUI PLATOS/MENU -->
+            {% for plato in menú.Platos %}
+            <div>
+                <h6>Plato {{ loop.index }}</h6>
+                <small>Nombre</small>
+                <input type="text" name="NombrePlato{{ loop.index }}" value="{{ plato.Nombre }}" class="form-control">
+                <small>Descripción</small>
+                <input type="text" name="DescripcionPlato{{ loop.index }}" value="{{ plato.Descripción }}" class="form-control">
+                <small>Precio</small>
+                <input type="text" name="PrecioPlato{{ loop.index }}" value="{{ plato.Precio }}" class="form-control">
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <button type="button" class="btn btn-danger">Eliminar</button>
+        </div>
+    </form>
+    {% endfor %}
+</div>
+
                 </div>
                 <div class="card mt-3" style="width: 18rem;">
                     <h1><strong>Insertar Menú</strong></h1>
