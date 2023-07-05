@@ -30,33 +30,33 @@
         
         <div class="row mt-4">
             <div class="col-md-4">
-                <div class="card card-container">  
-                    {% for Clientes in Clientes  %}
-                        <div>
-                            <h5>Clientes {{Clientes._id}}</h5>
-                            <small>ID</small>
-                            <input type="text"  id="" value="{{Clientes._id}}" class="form-control">
-                            <small>Nombre</small>
-                            <input type="text"  id="" value="{{Clientes.name}}" class="form-control">
-                            <small>Apellido</small>
-                            <input type="text"  id="" value="{{Clientes.apellido}}" class="form-control">
-                            <small>Telefono</small>
-                            <input type="text"  id="" value="{{Clientes.phone}}" class="form-control">
-                            <small>Dirección</small>
-                            <input type="text"  id="" value="{{Clientes.address}}" class="form-control">
-                            <small>Correo electronico</small>
-                            <input type="text"  id="" value="{{Clientes.mail}}" class="form-control">
-                            <div class="mt-2">
-                            <button id="editcli" type="button" class="btn btn-primary">Editar</button>
-                            <button id="dropcli" type="button" class="btn btn-danger">Eliminar</button>
-                            </div>
-                        </div>
-                    {% endfor  %}
-                </div>
+                <div class="card card-container">
+                    {% for cliente in Clientes %}
+                    <form action="/actualizar-cliente" method="POST">
+                      <h5>Cliente {{cliente._id}}</h5>
+                      <small>ID</small>
+                      <input type="text" name="id_cliente" value="{{cliente._id}}" class="form-control" readonly>
+                      <small>Nombre</small>
+                      <input type="text" name="name_cliente" value="{{cliente.name}}" class="form-control" required>
+                      <small>Apellido</small>
+                      <input type="text" name="apellido_cliente" value="{{cliente.apellido}}" class="form-control" required>
+                      <small>Telefono</small>
+                      <input type="text" name="phone_cliente" value="{{cliente.phone}}" class="form-control" required>
+                      <small>Dirección</small>
+                      <input type="text" name="address_cliente" value="{{cliente.address}}" class="form-control" required>
+                      <small>Correo electrónico</small>
+                      <input type="text" name="mail_cliente" value="{{cliente.mail}}" class="form-control" required>
+                      <div class="mt-2">
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                        <button type="button" class="btn btn-danger">Eliminar</button>
+                      </div>
+                    </form>
+                    {% endfor %}
+                  </div>                  
                 <div class="card mt-3" style="width: 18rem;">
                     <div class="card-body">
                         <h1><strong>Insertar Cliente</strong></h1>
-                        <form id="product-form" action="/insertar_cliente" method="POST" class="card-body">
+                        <form id="product-form" action="/insertar_cliente" method="POST" class="card-body" readonly>
                             <div class="form-group mt-2">
                                 <input type="text" name="name" placeholder="Nombre" class="form-control" required>
                             </div>
@@ -84,7 +84,7 @@
                         <div>
                             <h5>Pedido {{ Pedido._id }}</h5>
                             <small>ID</small>
-                            <input type="text" id="" value="{{ Pedido._id }}" class="form-control">
+                            <input type="text" id="" value="{{ Pedido._id }}" class="form-control" readonly>
                             <small>ID Cliente</small>
                             <input type="text" id="" value="{{ Pedido.Cliente }}" class="form-control">
                             <small>Fecha</small>
@@ -145,7 +145,7 @@
                         <div>
                             <h5>Menú {{ menú._id }}</h5>
                             <small>ID</small>
-                            <input type="text" id="" value="{{ menú._id }}" class="form-control">
+                            <input type="text" id="" value="{{ menú._id }}" class="form-control" readonly>
                             <small>Nombre</small>
                             <input type="text" id="" value="{{ menú.Nombre }}" class="form-control">
                             <small>Descripción</small>

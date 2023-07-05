@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from coneccion import conexion
+from bson import ObjectId
+
 
 app = Flask(__name__)
 
@@ -17,6 +19,9 @@ def home():
 
     return render_template('index.html', Clientes=datos, Pedidos=datospedidos, Menús=datosmenus)
 
+
+
+# CLIENTES ADMINISTRACION
 @app.route('/insertar_cliente', methods=['POST'])
 def insertar_cliente():
     db = conexion()
@@ -42,16 +47,37 @@ def insertar_cliente():
 @app.route('/actualizar-cliente', methods=['POST'])
 def actualizar_cliente():
     # Obtén los datos enviados desde el formulario
-    name = request.form.get('name')
-    apellido = request.form.get('apellido')
-    phone = request.form.get('phone')
-    address = request.form.get('address')
-    mail = request.form.get('mail')
+    cliente_id = request.form['id_cliente']
+    name = request.form['name_cliente']
+    apellido = request.form['apellido_cliente']
+    phone = request.form['phone_cliente']
+    address = request.form['address_cliente']
+    mail = request.form['mail_cliente']
+    # Realiza la actualización en la base de datos
+    db = conexion()
+    Clientes = db.Clientes
 
+    Clientes.update_one(
+        {'_id': ObjectId(cliente_id)},
+        {"$set": {
+            'name': name,
+            'apellido': apellido,
+            'phone': phone,
+            'address': address,
+            'mail': mail,
+            'estado': 1
+        }}
+    )
 
     # Redirecciona a la página principal u otra página de éxito
     return redirect('/')
 
+
+
+
+
+
+# PEDIDO ADMINISTRACION
 @app.route('/insertar_pedido', methods=['POST'])
 def insertar_pedido():
     db = conexion()
@@ -80,6 +106,10 @@ def insertar_pedido():
     return redirect('/') 
 
 
+
+
+
+# MENU ADMINISTRACION
 @app.route('/insertar_menu', methods=['POST'])
 def insertar_menu():
     db = conexion()
