@@ -9,13 +9,13 @@ app = Flask(__name__)
 def home():
     db = conexion()
     Clientes = db.Clientes
-    datos = Clientes.find()
+    datos = Clientes.find({"estado":1})
 
     Pedidos = db.Pedidos
-    datospedidos = Pedidos.find()
+    datospedidos = Pedidos.find({"estado":1})
 
     Menús = db.Menús
-    datosmenus = Menús.find()
+    datosmenus = Menús.find({"estado":1})
 
     return render_template('index.html', Clientes=datos, Pedidos=datospedidos, Menús=datosmenus)
 
@@ -47,7 +47,6 @@ def insertar_cliente():
 
     return redirect('/')       
 
- 
 @app.route('/actualizar-cliente', methods=['POST'])
 def actualizar_cliente():
     # Obtén los datos enviados desde el formulario
@@ -60,21 +59,53 @@ def actualizar_cliente():
     # Realiza la actualización en la base de datos
     db = conexion()
     Clientes = db.Clientes
+    if 'Eliminar' in request.form:
+        # Obtén el ID del cliente a "eliminar"
+        cliente_id = request.form['Eliminar']
+        Clientes.update_one({'_id': ObjectId(cliente_id)}, {"$set": {'estado': 0}})
+        
+        # Redirecciona a la página principal u otra página de éxito
+        return redirect('/')
+    else:
+        Clientes.update_one(
+            {'_id': ObjectId(cliente_id)},
+            {"$set": {
+                'name': name,
+                'apellido': apellido,
+                'phone': phone,
+                'address': address,
+                'mail': mail,
+                'estado': 1
+            }}
+        )
 
+        # Redirecciona a la página principal u otra página de éxito
+        return redirect('/')
+
+
+# Quizas ni siquiera se use esta funcion ya que al momento de actualizar un cliente podra elegir el boton 
+# y en el caso de ser el boton eliminar se actualizaria el estado del cliente a 0
+def eliminar_cliente():
+    # Obtén los datos enviados desde el formulario
+    cliente_id = request.form['id_cliente']
+    # Elimina el cliente de la base de datos
+    db = conexion()
+    Clientes = db.Clientes
     Clientes.update_one(
         {'_id': ObjectId(cliente_id)},
         {"$set": {
-            'name': name,
-            'apellido': apellido,
-            'phone': phone,
-            'address': address,
-            'mail': mail,
-            'estado': 1
-        }}
-    )
-
+            'estado': 0 
+            }}
+        )
     # Redirecciona a la página principal u otra página de éxito
     return redirect('/')
+
+
+
+
+
+
+
 
 
 # -------------------- PEDIDO ADMINISTRACION -------------------- #
@@ -121,6 +152,10 @@ def actualizar_pedido():
     # Realiza la actualización en la base de datos
     db = conexion()
     Pedidos = db.Pedidos
+    if 'Eliminar' in request.form:
+        # Obtén el ID del cliente a "eliminar"
+        pedido_id = request.form['Eliminar']
+        Pedidos.update_one({'_id': ObjectId(pedido_id)}, {"$set": {'estado': 0}})
 
     Pedidos.update_one(
         {'_id': ObjectId(pedido_id)},
@@ -193,7 +228,7 @@ def insertar_menu():
 
     return redirect('/')
 
-app.route('/actualizar-menu', methods=['POST'])
+app.route('/actualizar_menu', methods=['POST'])
 def actualizar_menu():
     # Obtén los datos enviados desde el formulario
     menu_id = request.form['id_menu']
@@ -208,13 +243,17 @@ def actualizar_menu():
     desc2 = request.form['DescripcionPlato2']
     price2 = request.form['PrecioPlato2']
 
-    platopos = request.form['NombrePostre']
-    descpos = request.form['DescripcionPostre']
-    pricepos = request.form['PrecioPostre']
+    platopos = request.form['NombrePlato3']
+    descpos = request.form['DescripcionPlato3']
+    pricepos = request.form['PrecioPlato3']
     # Realiza la actualización en la base de datos
     db = conexion()
     Menús = db.Menús
-
+    if 'Eliminar' in request.form:
+        # Obtén el ID del cliente a "eliminar"
+        menu_id = request.form['Eliminar']
+        Menús.update_one({'_id': ObjectId(menu_id)}, {"$set": {'estado': 0}})
+        
     Menús.update_one(
         {'_id': ObjectId(menu_id)},
         {"$set": {
@@ -239,7 +278,6 @@ def actualizar_menu():
             ]
         }}
     )
-
     # Redirecciona a la página principal u otra página de éxito
     return redirect('/')
 
