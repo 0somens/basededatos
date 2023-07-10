@@ -228,59 +228,47 @@ def insertar_menu():
 
     return redirect('/')
 
-app.route('/actualizar_menu', methods=['POST'])
+@app.route('/actualizar_menu', methods=['POST'])
 def actualizar_menu():
     # Obtén los datos enviados desde el formulario
     menu_id = request.form['id_menu']
-    nombre = request.form['NameMenu']
-    descripcion = request.form['DescripcionMenu']
-
-    plato1 = request.form['NombrePlato1']
-    desc1 = request.form['DescripcionPlato1']
-    price1 = request.form['PrecioPlato1']
-
-    plato2 = request.form['NombrePlato2']
-    desc2 = request.form['DescripcionPlato2']
-    price2 = request.form['PrecioPlato2']
-
-    platopos = request.form['NombrePlato3']
-    descpos = request.form['DescripcionPlato3']
-    pricepos = request.form['PrecioPlato3']
-    # Realiza la actualización en la base de datos
+    nombre_menu = request.form['NameMenu']
+    descripcion_menu = request.form['DescripcionMenu']
+    
+    # Actualiza los datos del menú en la base de datos
     db = conexion()
-    Menús = db.Menús
+    Menus = db.Menús
+    Menus.update_one(
+        {'_id': ObjectId(menu_id)},
+        {"$set": {
+            'Nombre': nombre_menu,
+            'Descripción': descripcion_menu,
+        }}
+    )
     if 'Eliminar' in request.form:
         # Obtén el ID del cliente a "eliminar"
         menu_id = request.form['Eliminar']
-        Menús.update_one({'_id': ObjectId(menu_id)}, {"$set": {'estado': 0}})
+        Menus.update_one({'_id': ObjectId(menu_id)}, {"$set": {'estado': 0}})
+    
+    # Actualiza los datos de los platos del menú en la base de datos
+    plato_index = 1
+    while f'NombrePlato{plato_index}' in request.form:
+        nombre_plato = request.form[f'NombrePlato{plato_index}']
+        descripcion_plato = request.form[f'DescripcionPlato{plato_index}']
+        precio_plato = request.form[f'PrecioPlato{plato_index}']
         
-    Menús.update_one(
-        {'_id': ObjectId(menu_id)},
-        {"$set": {
-            "Nombre": nombre,
-            "Descripción": descripcion,
-            "Platos": [
-                {
-                    "Nombre": plato1,
-                    "Descripción": desc1,
-                    "Precio": price1
-                },
-                {
-                    "Nombre": plato2,
-                    "Descripción": desc2,
-                    "Precio": price2
-                },
-                {
-                    "Nombre": platopos,
-                    "Descripción": descpos,
-                    "Precio": pricepos
-                }
-            ]
-        }}
-    )
+        Menus.update_one(
+            {'_id': ObjectId(menu_id), 'Platos.Nombre': nombre_plato},
+            {"$set": {
+                'Platos.$.Nombre': nombre_plato,
+                'Platos.$.Descripción': descripcion_plato,
+                'Platos.$.Precio': precio_plato,
+            }}
+        )
+        plato_index += 1
+    
     # Redirecciona a la página principal u otra página de éxito
     return redirect('/')
-
 
 
 
