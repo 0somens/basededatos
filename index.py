@@ -139,43 +139,43 @@ def insertar_pedido():
     # Aquí puedes insertar el pedido en la base de datos MongoDB
 
     return redirect('/')
-
 @app.route('/actualizar-pedido', methods=['POST'])
 def actualizar_pedido():
-    # Obtén los datos enviados desde el formulario
     pedido_id = request.form['id_pedido']
-    cliente = request.form['Cliente']
+    cliente_id = request.form['Cliente']
     fecha = request.form['Fecha']
-    nombre_plato = request.form['Plato1']
-    cantidad = request.form['Cantidad']
-    precio_unitario = request.form['PrecioUnitario']
+    
+    # Obtén los datos de los artículos
+    articulos = []
+    for i in range(1, 6):  # Suponiendo un máximo de 5 artículos por pedido
+        nombre = request.form.get(f'Plato{i}', '')
+        cantidad = int(request.form.get(f'Cantidad{i}', '0'))
+        precio_unitario = float(request.form.get(f'PrecioUnitario{i}', '0.0'))
+        if nombre:
+            articulos.append({
+                'Nombre': nombre,
+                'Cantidad': cantidad,
+                'PrecioUnitario': precio_unitario
+            })
+
     # Realiza la actualización en la base de datos
     db = conexion()
     Pedidos = db.Pedidos
     if 'Eliminar' in request.form:
-        # Obtén el ID del cliente a "eliminar"
         pedido_id = request.form['Eliminar']
         Pedidos.update_one({'_id': ObjectId(pedido_id)}, {"$set": {'estado': 0}})
-
-    Pedidos.update_one(
-        {'_id': ObjectId(pedido_id)},
-        {"$set": {
-            "Cliente": cliente,
-            "Fecha": fecha,
-            "Artículos": [
-                {
-                    "Nombre": nombre_plato,
-                    "Cantidad": cantidad,
-                    "PrecioUnitario": precio_unitario
-                }
-            ]
-        }}
-    )
-
-    # Redirecciona a la página principal u otra página de éxito
-    return redirect('/')
-
-
+        return redirect('/')
+    else:
+        Pedidos.update_one(
+            {'_id': ObjectId(pedido_id)},
+            {"$set": {
+                'Cliente': cliente_id,
+                'Fecha': fecha,
+                'Artículos': articulos,
+                'estado': 1
+            }}
+        )
+        return redirect('/')
 #-------------------- MENU ADMINISTRACION --------------------#
 #-------------------- MENU ADMINISTRACION --------------------#
 #-------------------- MENU ADMINISTRACION --------------------#
@@ -230,45 +230,41 @@ def insertar_menu():
 
 @app.route('/actualizar_menu', methods=['POST'])
 def actualizar_menu():
-    # Obtén los datos enviados desde el formulario
     menu_id = request.form['id_menu']
     nombre_menu = request.form['NameMenu']
     descripcion_menu = request.form['DescripcionMenu']
     
-    # Actualiza los datos del menú en la base de datos
+    # Obtén los datos de los platos
+    platos = []
+    for i in range(1, 6):  # Suponiendo un máximo de 5 platos en el menú
+        nombre_plato = request.form.get(f'NombrePlato{i}', '')
+        descripcion_plato = request.form.get(f'DescripcionPlato{i}', '')
+        precio_plato = float(request.form.get(f'PrecioPlato{i}', '0.0'))
+        if nombre_plato:
+            platos.append({
+                'Nombre': nombre_plato,
+                'Descripción': descripcion_plato,
+                'Precio': precio_plato
+            })
+
+    # Realiza la actualización en la base de datos
     db = conexion()
     Menus = db.Menús
-    Menus.update_one(
-        {'_id': ObjectId(menu_id)},
-        {"$set": {
-            'Nombre': nombre_menu,
-            'Descripción': descripcion_menu,
-        }}
-    )
     if 'Eliminar' in request.form:
-        # Obtén el ID del cliente a "eliminar"
         menu_id = request.form['Eliminar']
         Menus.update_one({'_id': ObjectId(menu_id)}, {"$set": {'estado': 0}})
-    
-    # Actualiza los datos de los platos del menú en la base de datos
-    plato_index = 1
-    while f'NombrePlato{plato_index}' in request.form:
-        nombre_plato = request.form[f'NombrePlato{plato_index}']
-        descripcion_plato = request.form[f'DescripcionPlato{plato_index}']
-        precio_plato = request.form[f'PrecioPlato{plato_index}']
-        
+        return redirect('/')
+    else:
         Menus.update_one(
-            {'_id': ObjectId(menu_id), 'Platos.Nombre': nombre_plato},
+            {'_id': ObjectId(menu_id)},
             {"$set": {
-                'Platos.$.Nombre': nombre_plato,
-                'Platos.$.Descripción': descripcion_plato,
-                'Platos.$.Precio': precio_plato,
+                'Nombre': nombre_menu,
+                'Descripción': descripcion_menu,
+                'Platos': platos,
+                'estado': 1
             }}
         )
-        plato_index += 1
-    
-    # Redirecciona a la página principal u otra página de éxito
-    return redirect('/')
+        return redirect('/')
 
 
 
