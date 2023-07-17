@@ -28,6 +28,7 @@ def home():
 def buscador():
     db = conexion()
     find = request.form['searcher']
+    # PENDIENTE
     
 
 
@@ -138,13 +139,18 @@ def eliminar_cliente():
 def insertar_pedido():
     db = conexion()
     Pedidos = db.Pedidos
+    Clientes = db.Clientes
+    
 
     cliente = request.form['Cliente']
+    if not Clientes.find_one({"_id": ObjectId(cliente)}):
+        return "El _id del cliente no se ha encontrado"
     fecha = request.form['Fecha']
     nombre_plato = request.form['Plato1']
     cantidad = request.form['Cantidad']
     precio_unitario = request.form['PrecioUnitario']
 
+    
     pedido = {
         "Cliente": cliente,
         "Fecha": fecha,
