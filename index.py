@@ -20,6 +20,26 @@ def home():
     return render_template('index.html', Clientes=datos, Pedidos=datospedidos, Menús=datosmenus)
 
 
+# -------------------- SEARCHER -------------------- #
+# -------------------- SEARCHER -------------------- #
+# -------------------- SEARCHER -------------------- #
+
+@app.route('/searcher', methods=['POST'])
+def buscador():
+    db = conexion()
+    find = request.form['searcher']
+    
+
+
+
+# -------------------- SEARCHER -------------------- #
+# -------------------- SEARCHER -------------------- #
+# -------------------- SEARCHER -------------------- #
+
+
+
+
+
 # -------------------- CLIENTES ADMINISTRACION -------------------- #
 # -------------------- CLIENTES ADMINISTRACION -------------------- #
 # -------------------- CLIENTES ADMINISTRACION -------------------- #
@@ -40,7 +60,8 @@ def insertar_cliente():
         'apellido': apellido,
         'phone': phone,
         'address': address,
-        'mail': mail
+        'mail': mail,
+        'estado': 1
     }
     
     Clientes.insert_one(cliente)
@@ -133,7 +154,8 @@ def insertar_pedido():
                 "Cantidad": cantidad,
                 "PrecioUnitario": precio_unitario
             }
-        ]
+        ],
+        'estado': 1
     }
     Pedidos.insert_one(pedido)
     # Aquí puedes insertar el pedido en la base de datos MongoDB
@@ -220,7 +242,8 @@ def insertar_menu():
                 "Descripción": descpos,
                 "Precio": pricepos
             }
-        ]
+        ],
+        'estado': 1
     }
 
     Menús.insert_one(menu)
